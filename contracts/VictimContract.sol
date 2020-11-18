@@ -10,8 +10,13 @@ contract VictimContract {
     }
 
     function withdraw(uint256 amount) public payable {
-        require(amount < balance[msg.sender], "Not enough balance!");
+        require(amount <= balance[msg.sender], "Not enough balance!");
+        // BAD!!
         msg.sender.call.value(amount)("");
         balance[msg.sender] -= amount;
+
+        // Better
+        // balance[msg.sender] -= amount;
+        // msg.sender.call.value(amount)("");
     }
 }
